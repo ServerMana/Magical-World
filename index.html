@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>탄막 슈팅 - 원소 마법사의 이야기</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 타이틀 화면 -->
+    <div id="screen-title" class="screen active">
+      <!-- 움직이는 배경 이미지들 -->
+      <div class="title-background"></div>
+      
+      <div class="title-container">
+        <h1 class="game-title">원소 마법사</h1>
+        <p class="subtitle">여덟 빛깔의 마탄</p>
+        <div class="title-buttons">
+          <button class="btn-large" onclick="goToMenu('difficulty')">게임 시작</button>
+          <button class="btn-large" onclick="goToMenu('settings')">설정</button>
+          <button class="btn-large" onclick="goToMenu('howtoplay')">조작법</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 난이도 선택 화면 -->
+    <div id="screen-difficulty" class="screen">
+      <div class="menu-container">
+        <h2>난이도 선택</h2>
+        <div class="difficulty-grid">
+          <div class="difficulty-card" onclick="selectDifficulty('easy')">
+            <div class="difficulty-label">EASY</div>
+            <div class="difficulty-desc">탄 수 적음, 속도 느림</div>
+          </div>
+          <div class="difficulty-card" onclick="selectDifficulty('normal')">
+            <div class="difficulty-label">NORMAL</div>
+            <div class="difficulty-desc">기본 난이도</div>
+          </div>
+          <div class="difficulty-card" onclick="selectDifficulty('hard')">
+            <div class="difficulty-label">HARD</div>
+            <div class="difficulty-desc">탄 수 많음, 속도 빠름</div>
+          </div>
+        </div>
+        <button class="btn-back" onclick="goToMenu('title')">← 뒤로가기</button>
+      </div>
+    </div>
+
+    <!-- 캐릭터 선택 화면 -->
+    <div id="screen-character" class="screen">
+      <div class="menu-container">
+        <h2>캐릭터 선택</h2>
+        <div class="character-grid">
+          <div class="character-card" onclick="selectCharacter('fire')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/FirePlayer.png" alt="불 - 이그니스">
+            </div>
+            <div class="character-name">불 - 이그니스</div>
+            <div class="character-skill">스킬: 마그마 폭발</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('water')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/WaterPlayer.png" alt="물 - 아쿠아리스">
+            </div>
+            <div class="character-name">물 - 아쿠아리스</div>
+            <div class="character-skill">스킬: 정화 장막</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('wind')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/WindPlayer.png" alt="바람 - 벤투스">
+            </div>
+            <div class="character-name">바람 - 벤투스</div>
+            <div class="character-skill">스킬: 질풍 궤적</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('earth')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/EarthPlayer.png" alt="땅 - 테라온">
+            </div>
+            <div class="character-name">땅 - 테라온</div>
+            <div class="character-skill">스킬: 암석 압착</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('light')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/LightPlayer.png" alt="빛 - 루미네">
+            </div>
+            <div class="character-name">빛 - 루미네</div>
+            <div class="character-skill">스킬: 레이저 정화</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('dark')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/DarkPlayer.png" alt="어둠 - 녹투르나">
+            </div>
+            <div class="character-name">어둠 - 녹투르나</div>
+            <div class="character-skill">스킬: 블랙홀</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('ice')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/IcePlayer.png" alt="냉기 - 프리가">
+            </div>
+            <div class="character-name">냉기 - 프리가</div>
+            <div class="character-skill">스킬: 빙결 영도</div>
+          </div>
+          <div class="character-card" onclick="selectCharacter('lightning')">
+            <div class="character-icon character-icon-image">
+              <img src="img/character/LightningPlayer.png" alt="전기 - 제우스온">
+            </div>
+            <div class="character-name">전기 - 제우스온</div>
+            <div class="character-skill">스킬: 연쇄 번개</div>
+          </div>
+        </div>
+        <div style="background: rgba(45, 10, 78, 0.3); border: 1px solid rgba(74, 124, 140, 0.5); border-radius: 8px; padding: 20px; margin: 20px 0;">
+          <h4 style="margin-top: 0; color: #66ddff; font-size: 1rem;">🎮 게임 캔버스 크기 설정</h4>
+          <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+            <label style="color: #ccc;">크기:</label>
+            <input type="number" id="character-canvas-width" min="640" max="1920" value="640" style="width: 80px; padding: 8px; background: rgba(20, 20, 30, 0.8); border: 1px solid #4a7c8c; border-radius: 4px; color: #66ddff; text-align: center;" />
+            <span style="color: #999;">×</span>
+            <input type="number" id="character-canvas-height" min="480" max="1080" value="480" style="width: 80px; padding: 8px; background: rgba(20, 20, 30, 0.8); border: 1px solid #4a7c8c; border-radius: 4px; color: #66ddff; text-align: center;" />
+            <button class="btn-secondary" onclick="applyCanvasFromCharacter()">적용</button>
+          </div>
+          <div style="font-size: 0.8rem; color: #999; margin-top: 8px;">범위: 가로 640~1920, 세로 480~1080</div>
+        </div>
+        <button class="btn-back" onclick="goToMenu('difficulty')">← 뒤로가기</button>
+      </div>
+    </div>
+
+    <!-- 게임 설정 확인 화면 -->
+    <div id="screen-confirm" class="screen">
+      <div class="menu-container confirm-container">
+        <h2>게임 설정 확인</h2>
+        
+        <div class="confirm-main">
+          <!-- 왼쪽: 캐릭터 정보 -->
+          <div class="confirm-left">
+            <!-- 캐릭터 이미지 -->
+            <div class="confirm-character-image">
+              <div id="confirm-icon-emoji" class="confirm-icon" style="display: none;">🔥</div>
+              <img id="confirm-icon-image" src="" alt="캐릭터">
+            </div>
+            
+            <div class="confirm-content">
+              <div class="confirm-item">
+                <span class="confirm-label">난이도:</span>
+                <span id="confirm-difficulty" class="confirm-value">NORMAL</span>
+              </div>
+              <div class="confirm-item">
+                <span class="confirm-label">캐릭터:</span>
+                <span id="confirm-character" class="confirm-value">불 - 이그니스</span>
+              </div>
+              <div class="confirm-item">
+                <span class="confirm-label">특수능력:</span>
+                <span id="confirm-skill" class="confirm-value">마그마 폭발</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 오른쪽: 능력치 시각화 -->
+          <div class="confirm-right">
+            <div class="stats-panel">
+              <h3>능력치</h3>
+              
+              <div class="stat-item">
+                <div class="stat-label">공격력</div>
+                <div id="stat-attack-display" class="stat-display">★★★☆☆</div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-label">발사속도</div>
+                <div id="stat-speed-display" class="stat-display">★★★★☆</div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-label">탄막범위</div>
+                <div id="stat-spread-display" class="stat-display">★★★☆☆</div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-label">스킬위력</div>
+                <div id="stat-bomb-display" class="stat-display">★★★★☆</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="confirm-buttons">
+          <button class="btn-large" onclick="startGame()">시작합니다!</button>
+          <button class="btn-back" onclick="goToMenu('character')">캐릭터 다시 선택</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 조작법 화면 -->
+    <div id="screen-howtoplay" class="screen">
+      <div class="menu-container">
+        <h2>조작법</h2>
+        <div class="howtoplay-content">
+          <div class="control-section">
+            <h3>📱 기본 조작</h3>
+            <ul>
+              <li><strong>이동:</strong> ←↑→↓ 또는 WASD</li>
+              <li><strong>샷:</strong> Z (연속 발사)</li>
+              <li><strong>스킬:</strong> X (한정된 횟수, 아이템으로 회복)</li>
+              <li><strong>포커스:</strong> Shift 누른 채 이동 (느린 이동, 정확한 피하기)</li>
+            </ul>
+          </div>
+          <div class="control-section">
+            <h3>🎯 게임 룰</h3>
+            <ul>
+              <li>적의 탄막을 피하고 적을 격파하여 점수 획득</li>
+              <li>잔기(Life)를 모두 잃으면 게임 오버</li>
+              <li>스킬으로 화면의 탄막과 적을 소거 (한정적)</li>
+              <li>아이템 회수: 화면 상단으로 이동 시 자동 회수</li>
+            </ul>
+          </div>
+          <div class="control-section">
+            <h3>💎 아이템</h3>
+            <ul>
+              <li><strong>P:</strong> 파워업 (공격력 강화)</li>
+              <li><strong>L:</strong> 생명 회복 (+1 잔기)</li>
+              <li><strong>B:</strong> 스킬 충전 (+1 스킬)</li>
+            </ul>
+          </div>
+        </div>
+        <button class="btn-back" onclick="goToMenu('title')">← 뒤로가기</button>
+      </div>
+    </div>
+
+    <!-- 설정 화면 -->
+    <div id="screen-settings" class="screen">
+      <div class="menu-container">
+        <h2>설정</h2>
+        <div class="settings-content">
+          <div class="setting-item">
+            <label>배경음 음량: </label>
+            <input type="range" id="bgm-volume" min="0" max="100" value="70" class="slider" />
+            <span id="bgm-value">70%</span>
+          </div>
+          <div class="setting-item">
+            <label>효과음 음량: </label>
+            <input type="range" id="sfx-volume" min="0" max="100" value="80" class="slider" />
+            <span id="sfx-value">80%</span>
+          </div>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="screen-flash" checked />
+              화면 깜빡임 효과 (스킬 사용 시)
+            </label>
+          </div>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="particle-effects" checked />
+              파티클 효과
+            </label>
+          </div>
+          <div class="setting-item">
+            <label>캔버스 크기 (가로 × 세로):</label>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+              <input type="number" id="canvas-width" min="640" max="1920" value="640" class="setting-input" placeholder="가로" />
+              <span style="align-self: center;">×</span>
+              <input type="number" id="canvas-height" min="480" max="1080" value="480" class="setting-input" placeholder="세로" />
+              <button class="btn-secondary" onclick="applyCanvasSize()">적용</button>
+            </div>
+          </div>
+          <div class="setting-item">
+            <button class="btn-secondary" onclick="resetSettings()">기본값 복원</button>
+          </div>
+        </div>
+        <button class="btn-back" onclick="goToMenu('title')">← 뒤로가기</button>
+      </div>
+    </div>
+
+    <!-- 게임 화면 -->
+    <div id="screen-game" class="screen">
+      <div id="ui-overlay">
+        <div id="ui-left">
+          <div id="score">SCORE: 0</div>
+          <div id="hiscore">HI-SCORE: 0</div>
+          <div id="lives">LIVES: ❤️❤️❤️</div>
+          <div id="bombs">BOMB: 💣💣</div>
+          <div id="power">POWER: ▮▮▮▮▮</div>
+          <div id="time">TIME: 0:00</div>
+        </div>
+        <div id="ui-right">
+          <div id="stage">STAGE: 1</div>
+          <div id="difficulty-display">DIFFICULTY: NORMAL</div>
+          <div id="character-display">CHARACTER: 불</div>
+        </div>
+        <div id="ui-bottom">
+          <div id="boss-hp" style="display:none">BOSS HP: <div id="boss-hp-bar"></div></div>
+        </div>
+      </div>
+      <canvas id="gameCanvas" width="640" height="480" style="display: block; margin: 0 auto; max-width: 100%; height: auto; border: 2px solid #4a7c8c; border-radius: 8px;"></canvas>
+      <div id="pause-menu" style="display:none">
+        <div class="pause-content">
+          <h2>일시 정지</h2>
+          <button class="btn-secondary" onclick="resumeGame()">계속하기</button>
+          <button class="btn-secondary" onclick="goToMenu('title')">타이틀로</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 게임오버 화면 -->
+    <div id="screen-gameover" class="screen">
+      <div class="menu-container gameover-container">
+        <h2 class="gameover-title">GAME OVER</h2>
+        
+        <div class="gameover-content">
+          <div class="score-section">
+            <div class="final-score">
+              <span class="score-label">FINAL SCORE</span>
+              <span id="final-score-value" class="score-value">0</span>
+            </div>
+            
+            <div class="high-score">
+              <span class="score-label">HIGH SCORE</span>
+              <span id="final-hiscore-value" class="score-value">0</span>
+            </div>
+            
+            <div id="new-record" class="new-record" style="display: none;">
+              🎉 NEW RECORD! 🎉
+            </div>
+          </div>
+          
+          <div class="gameover-stats">
+            <div class="stat-row">
+              <span class="stat-label">플레이 시간:</span>
+              <span id="final-time" class="stat-value">0:00</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">도달 스테이지:</span>
+              <span id="final-stage" class="stat-value">1</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">선택 캐릭터:</span>
+              <span id="final-character" class="stat-value">불 - 이그니스</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">난이도:</span>
+              <span id="final-difficulty" class="stat-value">NORMAL</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="gameover-buttons">
+          <button class="btn-large" onclick="restartGame()">다시 시작</button>
+          <button class="btn-large" onclick="goToMenu('title')">타이틀로</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="difficulty.js"></script>
+    <script src="character.js"></script>
+    <script src="enemy.js"></script>
+    <script src="boss.js"></script>
+    <script src="audio.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
